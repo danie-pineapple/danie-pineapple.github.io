@@ -21,7 +21,7 @@ export function ContactSection() {
           right: '-5%',
           width: '50%',
           height: '70%',
-          background: 'radial-gradient(ellipse, rgba(242, 120, 74, 0.1) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse, rgba(242, 120, 74, 0.07) 0%, transparent 65%)',
           filter: 'blur(70px)',
         }}
       />
@@ -32,7 +32,7 @@ export function ContactSection() {
           left: '-5%',
           width: '35%',
           height: '50%',
-          background: 'radial-gradient(ellipse, rgba(68, 83, 232, 0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(68, 83, 232, 0.06) 0%, transparent 70%)',
           filter: 'blur(60px)',
         }}
       />
@@ -42,7 +42,7 @@ export function ContactSection() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-xs uppercase tracking-[0.3em] text-white/55 font-light mb-4"
+          className="text-xs uppercase tracking-[0.3em] text-neutral-500 font-light mb-4"
         >
           {t.contact.kicker}
         </motion.p>
@@ -52,7 +52,7 @@ export function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-bold uppercase text-white leading-none tracking-tight mb-4"
+          className="font-bold uppercase text-neutral-900 leading-none tracking-tight mb-4"
           style={{ fontSize: 'clamp(2rem, 5vw, 5rem)' }}
         >
           {t.contact.heading}
@@ -74,7 +74,7 @@ export function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white/60 font-light leading-relaxed mb-10 max-w-lg"
+          className="text-neutral-600 font-light leading-relaxed mb-10 max-w-lg"
           style={{ fontSize: 'clamp(0.85rem, 1.4vw, 1rem)' }}
         >
           {t.contact.description}
@@ -88,7 +88,7 @@ export function ContactSection() {
         >
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/40 transition-all duration-200 text-sm font-light uppercase tracking-widest"
+            className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full border border-neutral-300 text-neutral-700 hover:text-neutral-900 hover:border-neutral-500 transition-all duration-200 text-sm font-light uppercase tracking-widest"
           >
             <Mail size={15} className="flex-shrink-0" />
             <span>{CONTACT_EMAIL}</span>

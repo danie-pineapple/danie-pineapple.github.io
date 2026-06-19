@@ -12,11 +12,11 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #07060F;
+  background-color: #FFFFFF;
 }
 
 body {
-  background-color: #07060F;
+  background-color: #FFFFFF;
   font-family: 'Kanit', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -24,7 +24,7 @@ body {
 }
 
 #root {
-  background-color: #07060F;
+  background-color: #FFFFFF;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -48,8 +48,8 @@ body {
 }
 
 @keyframes pineapple-glow {
-  0%, 100% { filter: drop-shadow(0 25px 40px rgba(68, 83, 232, 0.35)); }
-  50% { filter: drop-shadow(0 35px 55px rgba(242, 120, 74, 0.35)); }
+  0%, 100% { filter: drop-shadow(0 25px 40px rgba(68, 83, 232, 0.4)); }
+  50% { filter: drop-shadow(0 35px 55px rgba(242, 120, 74, 0.4)); }
 }
 
 /* ── Video cards: smooth poster → video crossfade ── */

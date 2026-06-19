@@ -64,7 +64,9 @@ export function VideoModal({ clip, title, description, onClose }: VideoModalProp
         />
         <div className="text-center max-w-md px-4">
           <p className="text-white text-sm font-medium uppercase tracking-wide">{title}</p>
-          <p className="text-white/50 text-xs font-light mt-1 leading-relaxed">{description}</p>
+          {description && (
+            <p className="text-white/50 text-xs font-light mt-1 leading-relaxed">{description}</p>
+          )}
         </div>
       </motion.div>
     </motion.div>

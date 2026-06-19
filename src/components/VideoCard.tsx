@@ -39,7 +39,7 @@ export function VideoCard({ clip, title, spanClassName, onOpen }: VideoCardProps
     <div
       ref={containerRef}
       onClick={onOpen}
-      className={`video-card group relative cursor-pointer overflow-hidden rounded-xl bg-white/5 ${spanClassName}`}
+      className={`video-card group relative cursor-pointer overflow-hidden rounded-xl bg-neutral-100 ${spanClassName}`}
     >
       <video
         ref={videoRef}

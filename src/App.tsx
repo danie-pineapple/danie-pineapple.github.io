@@ -7,7 +7,7 @@ import { Footer } from './sections/Footer'
 
 export default function App() {
   return (
-    <div style={{ background: '#07060F', overflowX: 'hidden' }}>
+    <div style={{ background: '#FFFFFF', overflowX: 'hidden' }}>
       {/* ── Destellos de fondo fijos (siguen al hacer scroll) ── */}
       {/* Indigo – esquina superior derecha */}
       <div
@@ -18,7 +18,7 @@ export default function App() {
           right: '-8%',
           width: '52%',
           height: '70%',
-          background: 'radial-gradient(ellipse, rgba(68, 83, 232, 0.13) 0%, transparent 68%)',
+          background: 'radial-gradient(ellipse, rgba(68, 83, 232, 0.06) 0%, transparent 68%)',
           filter: 'blur(55px)',
           zIndex: 0,
         }}
@@ -32,7 +32,7 @@ export default function App() {
           left: '-6%',
           width: '45%',
           height: '60%',
-          background: 'radial-gradient(ellipse, rgba(242, 120, 74, 0.08) 0%, transparent 68%)',
+          background: 'radial-gradient(ellipse, rgba(242, 120, 74, 0.05) 0%, transparent 68%)',
           filter: 'blur(70px)',
           zIndex: 0,
         }}

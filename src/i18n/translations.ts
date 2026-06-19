@@ -25,7 +25,14 @@ export interface TranslationShape {
     paragraphs: string[]
     stats: { value: string; label: string }[]
   }
-  work: { kicker: string; heading: string; watch: string; empty: string }
+  work: {
+    kicker: string
+    heading: string
+    watch: string
+    empty: string
+    reelLabel: string
+    reelComing: string
+  }
   contact: { kicker: string; heading: string; description: string; emailLabel: string }
   footer: { rights: string; location: string }
 }
@@ -67,6 +74,8 @@ export const translations: Record<Lang, TranslationShape> = {
       heading: 'Work',
       watch: 'Watch',
       empty: 'Coming soon',
+      reelLabel: 'Showreel',
+      reelComing: 'Main showreel coming soon',
     },
     contact: {
       kicker: "Let's create",
@@ -115,6 +124,8 @@ export const translations: Record<Lang, TranslationShape> = {
       heading: 'Proyectos',
       watch: 'Ver',
       empty: 'Próximamente',
+      reelLabel: 'Reel principal',
+      reelComing: 'Reel principal próximamente',
     },
     contact: {
       kicker: 'Creemos juntos',

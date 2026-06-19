@@ -27,9 +27,9 @@ export function Navbar() {
       <nav
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          background: scrolled ? 'rgba(7,6,15,0.88)' : 'transparent',
+          background: scrolled ? 'rgba(255,255,255,0.82)' : 'transparent',
           backdropFilter: scrolled ? 'blur(16px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(0,0,0,0.06)' : 'none',
         }}
       >
         <div className="flex items-center justify-between px-6 md:px-10 lg:px-16 py-4 md:py-5">
@@ -46,7 +46,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm lg:text-base font-light uppercase tracking-widest text-white/50 hover:text-white transition-colors duration-200"
+                className="text-sm lg:text-base font-light uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -57,7 +57,7 @@ export function Navbar() {
           <div className="md:hidden flex items-center gap-3">
             <LanguageToggle />
             <button
-              className="text-white p-1"
+              className="text-neutral-900 p-1"
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -75,11 +75,11 @@ export function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[60] flex flex-col"
-            style={{ background: '#07060F' }}
+            style={{ background: '#FFFFFF' }}
           >
             <div className="flex items-center justify-between px-6 py-4">
               <img src={imgUrl('/images/logo.png')} alt="Daniela Piña" className="h-7 w-auto" />
-              <button onClick={() => setMenuOpen(false)} className="text-white p-1">
+              <button onClick={() => setMenuOpen(false)} className="text-neutral-900 p-1">
                 <X size={22} />
               </button>
             </div>
@@ -92,7 +92,7 @@ export function Navbar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="text-3xl font-black uppercase tracking-widest text-white"
+                  className="text-3xl font-black uppercase tracking-widest text-neutral-900"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}

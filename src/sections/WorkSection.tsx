@@ -4,6 +4,7 @@ import { projects, ProjectClip } from '../data/projects'
 import { GradientLine } from '../components/GradientLine'
 import { VideoCard } from '../components/VideoCard'
 import { VideoModal } from '../components/VideoModal'
+import { FeaturedReel } from '../components/FeaturedReel'
 import { useLanguage } from '../i18n/LanguageContext'
 
 interface FlatCard {
@@ -38,7 +39,7 @@ export function WorkSection() {
           right: '-8%',
           width: '40%',
           height: '45%',
-          background: 'radial-gradient(ellipse, rgba(242, 120, 74, 0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(242, 120, 74, 0.06) 0%, transparent 70%)',
           filter: 'blur(70px)',
         }}
       />
@@ -49,7 +50,7 @@ export function WorkSection() {
           left: '-8%',
           width: '35%',
           height: '40%',
-          background: 'radial-gradient(ellipse, rgba(68, 83, 232, 0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(68, 83, 232, 0.05) 0%, transparent 70%)',
           filter: 'blur(70px)',
         }}
       />
@@ -59,7 +60,7 @@ export function WorkSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-xs uppercase tracking-[0.3em] text-white/55 font-light mb-3"
+          className="text-xs uppercase tracking-[0.3em] text-neutral-500 font-light mb-3"
         >
           {t.work.kicker}
         </motion.p>
@@ -68,7 +69,7 @@ export function WorkSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="font-bold uppercase text-white leading-none tracking-tight"
+          className="font-bold uppercase text-neutral-900 leading-none tracking-tight"
           style={{ fontSize: 'clamp(2rem, 5vw, 5rem)' }}
         >
           {t.work.heading}
@@ -84,6 +85,8 @@ export function WorkSection() {
           <GradientLine thickness={2} />
         </motion.div>
       </div>
+
+      <FeaturedReel />
 
       {cards.length > 0 ? (
         <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 auto-rows-[150px] sm:auto-rows-[180px] lg:auto-rows-[210px]">
@@ -106,7 +109,7 @@ export function WorkSection() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 text-white/35 text-sm uppercase tracking-widest">
+        <div className="text-center py-24 text-neutral-400 text-sm uppercase tracking-widest">
           {t.work.empty}
         </div>
       )}
