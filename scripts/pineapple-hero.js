@@ -4,9 +4,12 @@
 // visitante — no requiere instalación ni build step.
 //
 // Comportamiento:
-// 1. Busca un .glb real en /models/pineapple.glb (exportado
-//    desde Maya). Si existe, lo usa.
-// 2. Si no existe (o falla la carga), genera una piña
+// 1. Busca un modelo real en /models/, probando en orden:
+//    pineapple.glb → pineapple.fbx → pineapple.obj (con
+//    pineapple.mtl opcional junto al .obj para su color/textura).
+//    Se usa el primero que exista, respetando el material/color
+//    que ya traiga exportado (no se sobreescribe ningún color).
+// 2. Si no existe ninguno (o falla la carga), genera una piña
 //    procedural de bajo poligonaje a juego con el logo/marca,
 //    con degradado azul → coral en los vértices.
 // 3. Si el CDN no carga (sin internet, bloqueado, etc.) deja
@@ -16,7 +19,11 @@
 
 const THREE_VERSION = '0.160.0'
 const CDN_BASE = `https://cdn.jsdelivr.net/npm/three@${THREE_VERSION}`
-const GLB_PATH = '/models/pineapple.glb'
+const MODELS_DIR = '/models/'
+const GLB_FILE = 'pineapple.glb'
+const FBX_FILE = 'pineapple.fbx'
+const OBJ_FILE = 'pineapple.obj'
+const MTL_FILE = 'pineapple.mtl'
 
 const COLOR_TOP = 0x4453e8 // indigo
 const COLOR_MID = 0x8a4fd8 // violet
@@ -129,32 +136,78 @@ async function init() {
 
   buildProceduralPineapple()
 
+  function useRealModel(model) {
+    group.clear()
+    const box = new THREE.Box3().setFromObject(model)
+    const size = new THREE.Vector3()
+    box.getSize(size)
+    const scale = 2.4 / Math.max(size.x, size.y, size.z, 0.001)
+    model.scale.setScalar(scale)
+    const center = new THREE.Vector3()
+    box.getCenter(center)
+    model.position.sub(center.multiplyScalar(scale))
+    group.add(model)
+  }
+
+  function tryLoadOBJ() {
+    Promise.all([
+      import(/* @vite-ignore */ `${CDN_BASE}/examples/jsm/loaders/OBJLoader.js`),
+      import(/* @vite-ignore */ `${CDN_BASE}/examples/jsm/loaders/MTLLoader.js`),
+    ])
+      .then(([{ OBJLoader }, { MTLLoader }]) => {
+        const objLoader = new OBJLoader()
+        objLoader.setPath(MODELS_DIR)
+
+        const loadObjPlain = () => {
+          objLoader.load(OBJ_FILE, useRealModel, undefined, () => {
+            /* no hay .obj tampoco — se mantiene el procedural */
+          })
+        }
+
+        const mtlLoader = new MTLLoader()
+        mtlLoader.setPath(MODELS_DIR)
+        mtlLoader.setResourcePath(MODELS_DIR)
+        mtlLoader.load(
+          MTL_FILE,
+          (materials) => {
+            materials.preload()
+            objLoader.setMaterials(materials)
+            loadObjPlain()
+          },
+          undefined,
+          loadObjPlain // sin .mtl — carga el .obj con su material por defecto
+        )
+      })
+      .catch(() => {})
+  }
+
+  function tryLoadFBX() {
+    import(/* @vite-ignore */ `${CDN_BASE}/examples/jsm/loaders/FBXLoader.js`)
+      .then(({ FBXLoader }) => {
+        const loader = new FBXLoader()
+        loader.setPath(MODELS_DIR)
+        loader.load(FBX_FILE, useRealModel, undefined, () => {
+          tryLoadOBJ()
+        })
+      })
+      .catch(() => tryLoadOBJ())
+  }
+
   function tryLoadGLB() {
     import(/* @vite-ignore */ `${CDN_BASE}/examples/jsm/loaders/GLTFLoader.js`)
       .then(({ GLTFLoader }) => {
         const loader = new GLTFLoader()
+        loader.setPath(MODELS_DIR)
         loader.load(
-          GLB_PATH,
-          (gltf) => {
-            group.clear()
-            const model = gltf.scene
-            const box = new THREE.Box3().setFromObject(model)
-            const size = new THREE.Vector3()
-            box.getSize(size)
-            const scale = 2.4 / Math.max(size.x, size.y, size.z, 0.001)
-            model.scale.setScalar(scale)
-            const center = new THREE.Vector3()
-            box.getCenter(center)
-            model.position.sub(center.multiplyScalar(scale))
-            group.add(model)
-          },
+          GLB_FILE,
+          (gltf) => useRealModel(gltf.scene),
           undefined,
           () => {
-            /* no hay modelo real todavía — se mantiene el procedural */
+            tryLoadFBX()
           }
         )
       })
-      .catch(() => {})
+      .catch(() => tryLoadFBX())
   }
   tryLoadGLB()
 
