@@ -1,0 +1,19 @@
+Modelo 3D de la piña — instrucciones
+
+Coloca aquí tu archivo exportado con uno de estos nombres exactos
+(el sitio los busca en este orden y usa el primero que encuentre):
+
+1. pineapple.glb   (ideal, pero no es necesario)
+2. pineapple.fbx
+3. pineapple.obj   + pineapple.mtl  (si tu .obj usa colores/texturas,
+                       el .mtl debe ir en esta misma carpeta junto al .obj)
+
+Si tu modelo usa una imagen de textura (ej. textura.png), pon también
+ese archivo de imagen en esta misma carpeta.
+
+El color/material que ya tenga tu archivo se respeta tal cual —
+no se le aplica ningún color por código.
+
+Si no hay ningún archivo aquí, el sitio muestra automáticamente una
+piña de relleno generada por código (con el degradado azul-violeta-coral)
+hasta que subas tu modelo real.

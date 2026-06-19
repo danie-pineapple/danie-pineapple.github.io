@@ -43,12 +43,8 @@ export function HeroSection() {
               initial={{ y: 90, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.35, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="font-bold uppercase leading-none tracking-tight"
-              style={{
-                fontSize: 'clamp(3rem, 7.5vw, 8.5rem)',
-                WebkitTextStroke: '1.5px rgba(10,10,15,0.25)',
-                color: 'transparent',
-              }}
+              className="font-bold uppercase leading-none tracking-tight text-neutral-900"
+              style={{ fontSize: 'clamp(3rem, 7.5vw, 8.5rem)' }}
             >
               {t.hero.titleLine2}
             </motion.h1>

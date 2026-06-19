@@ -30,7 +30,7 @@ export function WorkSection() {
   return (
     <section
       id="work"
-      className="relative px-4 sm:px-8 md:px-12 lg:px-20 py-12 md:py-32 overflow-hidden"
+      className="relative px-4 sm:px-8 md:px-12 lg:px-20 py-12 md:py-32 overflow-hidden bg-neutral-50"
     >
       <div
         className="absolute pointer-events-none"
