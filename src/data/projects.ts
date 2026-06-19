@@ -90,4 +90,14 @@ export const projects: Project[] = [
     },
     clips: [clip('vertical', 'takes_00_au.mp4')],
   },
+  {
+    id: 'megarobo-trailer',
+    title: 'MegaRobo — Trailer',
+    year: '2026',
+    description: {
+      en: 'Animated trailer piece, focused on character acting and scene staging.',
+      es: 'Pieza de trailer animado, con foco en actuación de personaje y puesta en escena.',
+    },
+    clips: [clip('horizontal', 'megarobo_trailer_2026_1.mp4')],
+  },
 ]
