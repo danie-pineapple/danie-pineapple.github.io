@@ -2,15 +2,11 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { imgUrl } from '../utils/imgUrl'
-
-const NAV_LINKS = [
-  { label: 'Fotografía', href: '#fotografia' },
-  { label: 'Video', href: '#video' },
-  { label: 'About', href: '#about' },
-  { label: 'Contacto', href: '#contacto' },
-]
+import { useLanguage } from '../i18n/LanguageContext'
+import { LanguageToggle } from './LanguageToggle'
 
 export function Navbar() {
+  const { t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -19,6 +15,12 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const navLinks = [
+    { label: t.nav.work, href: '#work' },
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.contact, href: '#contact' },
+  ]
 
   return (
     <>
@@ -31,18 +33,16 @@ export function Navbar() {
         }}
       >
         <div className="flex items-center justify-between px-6 md:px-10 lg:px-16 py-4 md:py-5">
-          {/* Logo */}
-          <a href="#" aria-label="Isaac Ruiz">
+          <a href="#hero" aria-label="Daniela Piña">
             <img
               src={imgUrl('/images/logo.png')}
-              alt="Isaac Ruiz"
-              className="h-6 md:h-7 w-auto"
+              alt="Daniela Piña"
+              className="h-7 md:h-8 w-auto"
             />
           </a>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-12">
-            {NAV_LINKS.map((link) => (
+          <div className="hidden md:flex items-center gap-8 lg:gap-10">
+            {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
@@ -51,20 +51,22 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
+            <LanguageToggle />
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden text-white p-1"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Abrir menú"
-          >
-            <Menu size={22} />
-          </button>
+          <div className="md:hidden flex items-center gap-3">
+            <LanguageToggle />
+            <button
+              className="text-white p-1"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu size={22} />
+            </button>
+          </div>
         </div>
       </nav>
 
-      {/* Mobile menu overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -76,14 +78,14 @@ export function Navbar() {
             style={{ background: '#07060F' }}
           >
             <div className="flex items-center justify-between px-6 py-4">
-              <img src={imgUrl('/images/logo.png')} alt="Isaac Ruiz" className="h-6 w-auto" />
+              <img src={imgUrl('/images/logo.png')} alt="Daniela Piña" className="h-7 w-auto" />
               <button onClick={() => setMenuOpen(false)} className="text-white p-1">
                 <X size={22} />
               </button>
             </div>
 
             <div className="flex flex-col items-center justify-center flex-1 gap-10">
-              {NAV_LINKS.map((link, i) => (
+              {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}

@@ -35,3 +35,24 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ── Hero 3D pineapple — CSS fallback (shown until WebGL takes over) ── */
+.pineapple-fallback-icon {
+  animation: pineapple-float 6s ease-in-out infinite, pineapple-glow 6s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+@keyframes pineapple-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-18px) rotate(2deg); }
+}
+
+@keyframes pineapple-glow {
+  0%, 100% { filter: drop-shadow(0 25px 40px rgba(68, 83, 232, 0.35)); }
+  50% { filter: drop-shadow(0 35px 55px rgba(242, 120, 74, 0.35)); }
+}
+
+/* ── Video cards: smooth poster → video crossfade ── */
+.video-card video {
+  transition: opacity 0.4s ease;
+}

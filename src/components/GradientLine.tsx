@@ -9,7 +9,7 @@ export function GradientLine({ className = '', thickness = 2 }: GradientLineProp
       className={`w-full rounded-full ${className}`}
       style={{
         height: thickness,
-        background: 'linear-gradient(90deg, #2563EB 0%, #06B6D4 33%, #10B981 66%, #F59E0B 100%)',
+        background: 'linear-gradient(90deg, #4453E8 0%, #8A4FD8 50%, #F2784A 100%)',
       }}
     />
   )
