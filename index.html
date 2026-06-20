@@ -13,6 +13,22 @@
       href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+    <!--
+      Import map: los loaders de three.js (examples/jsm/loaders/*) hacen
+      `import ... from 'three'` internamente. Sin este mapa, el navegador
+      no sabe a qué URL corresponde "three" y el import falla en
+      silencio — el modelo real nunca se carga y se queda en el
+      fallback procedural. Debe coincidir con THREE_VERSION en
+      public/scripts/pineapple-hero.js.
+    -->
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+      }
+    </script>
     <script type="module" crossorigin src="/assets/index-EQoietd4.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-DLQFOSfH.css">
   </head>
