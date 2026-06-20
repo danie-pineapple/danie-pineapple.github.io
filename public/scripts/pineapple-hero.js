@@ -29,6 +29,11 @@ const COLOR_TOP = 0x4453e8 // indigo
 const COLOR_MID = 0x8a4fd8 // violet
 const COLOR_BOTTOM = 0xf2784a // coral
 
+// Inclinación diagonal de reposo (radianes) — el mouse sigue
+// aportando un pequeño tilt extra alrededor de este punto.
+const BASE_TILT_X = 0.16
+const BASE_TILT_Z = 0.42
+
 function waitForElement(id, timeout = 6000) {
   return new Promise((resolve) => {
     const start = performance.now()
@@ -87,7 +92,7 @@ async function init() {
         metalness: 0.12,
       })
     )
-    body.scale.set(0.82, 1.28, 0.82)
+    body.scale.set(1.05, 1.65, 1.05)
 
     const geo = body.geometry
     const posAttr = geo.attributes.position
@@ -122,10 +127,10 @@ async function init() {
     })
     const leafCount = 7
     for (let i = 0; i < leafCount; i++) {
-      const leaf = new THREE.Mesh(new THREE.ConeGeometry(0.16, 1.15, 4), leafMat)
+      const leaf = new THREE.Mesh(new THREE.ConeGeometry(0.21, 1.5, 4), leafMat)
       const angle = (i / leafCount) * Math.PI * 2
       const tilt = 0.55
-      leaf.position.set(Math.cos(angle) * 0.18, 1.32, Math.sin(angle) * 0.18)
+      leaf.position.set(Math.cos(angle) * 0.23, 1.7, Math.sin(angle) * 0.23)
       leaf.rotation.set(Math.cos(angle) * tilt, angle, Math.sin(angle) * -tilt)
       leaf.rotation.z += Math.PI
       group.add(leaf)
@@ -141,7 +146,7 @@ async function init() {
     const box = new THREE.Box3().setFromObject(model)
     const size = new THREE.Vector3()
     box.getSize(size)
-    const scale = 2.4 / Math.max(size.x, size.y, size.z, 0.001)
+    const scale = 3.2 / Math.max(size.x, size.y, size.z, 0.001)
     model.scale.setScalar(scale)
     const center = new THREE.Vector3()
     box.getCenter(center)
@@ -248,8 +253,11 @@ async function init() {
     if (!prefersReducedMotion) {
       group.rotation.y += 0.0035
       group.position.y = Math.sin(t * 0.9) * 0.12
-      group.rotation.x += (mouseY * 0.25 - group.rotation.x) * 0.04
-      group.rotation.z += (-mouseX * 0.15 - group.rotation.z) * 0.04
+      group.rotation.x += (BASE_TILT_X + mouseY * 0.2 - group.rotation.x) * 0.04
+      group.rotation.z += (BASE_TILT_Z - mouseX * 0.12 - group.rotation.z) * 0.04
+    } else {
+      group.rotation.x = BASE_TILT_X
+      group.rotation.z = BASE_TILT_Z
     }
 
     renderer.render(scene, camera)
