@@ -9,9 +9,13 @@
 //    pineapple.mtl opcional junto al .obj para su color/textura).
 //    Se usa el primero que exista, respetando el material/color
 //    que ya traiga exportado (no se sobreescribe ningún color).
-// 2. Si no existe ninguno (o falla la carga), genera una piña
-//    procedural de bajo poligonaje a juego con el logo/marca,
-//    con degradado azul → coral en los vértices.
+//    Si además existe pineapple_basecolor.png en la misma carpeta,
+//    se aplica como textura de color sobre el modelo cargado.
+// 2. El fallback CSS (ícono del logo) se mantiene visible mientras
+//    el modelo real carga — la piña procedural generada por código
+//    NUNCA se muestra si hay un modelo real disponible; solo se
+//    genera como último recurso, si fallan todos los intentos de
+//    carga (glb, fbx y obj).
 // 3. Si el CDN no carga (sin internet, bloqueado, etc.) deja
 //    el fallback CSS (ícono del logo flotando) intacto —
 //    el hero nunca se ve roto.
@@ -24,6 +28,7 @@ const GLB_FILE = 'pineapple.glb'
 const FBX_FILE = 'pineapple.fbx'
 const OBJ_FILE = 'pineapple.obj'
 const MTL_FILE = 'pineapple.mtl'
+const BASECOLOR_FILE = 'pineapple_basecolor.png'
 
 const COLOR_TOP = 0x4453e8 // indigo
 const COLOR_MID = 0x8a4fd8 // violet
@@ -139,8 +144,6 @@ async function init() {
     return group
   }
 
-  buildProceduralPineapple()
-
   function useRealModel(model) {
     group.clear()
     const box = new THREE.Box3().setFromObject(model)
@@ -154,6 +157,33 @@ async function init() {
     group.add(model)
   }
 
+  // Si el modelo trae una textura de color horneada por separado
+  // (pineapple_basecolor.png junto al modelo), se aplica encima de
+  // cualquier material que ya traiga el archivo. Si el archivo no
+  // existe, falla en silencio y se respeta el material original.
+  function applyBaseColorTexture(model) {
+    new THREE.TextureLoader().load(
+      MODELS_DIR + BASECOLOR_FILE,
+      (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace
+        model.traverse((child) => {
+          if (!child.isMesh) return
+          const materials = Array.isArray(child.material) ? child.material : [child.material]
+          materials.forEach((mat) => {
+            if (!mat) return
+            mat.map = texture
+            if (mat.color) mat.color.set(0xffffff)
+            mat.needsUpdate = true
+          })
+        })
+      },
+      undefined,
+      () => {
+        /* sin textura base color — se respeta el material del archivo */
+      }
+    )
+  }
+
   function tryLoadOBJ() {
     Promise.all([
       import(/* @vite-ignore */ `${CDN_BASE}/examples/jsm/loaders/OBJLoader.js`),
@@ -164,9 +194,19 @@ async function init() {
         objLoader.setPath(MODELS_DIR)
 
         const loadObjPlain = () => {
-          objLoader.load(OBJ_FILE, useRealModel, undefined, () => {
-            /* no hay .obj tampoco — se mantiene el procedural */
-          })
+          objLoader.load(
+            OBJ_FILE,
+            (model) => {
+              useRealModel(model)
+              applyBaseColorTexture(model)
+            },
+            undefined,
+            () => {
+              // No hay ningún modelo real disponible — único caso en
+              // que se genera la piña de relleno por código.
+              buildProceduralPineapple()
+            }
+          )
         }
 
         const mtlLoader = new MTLLoader()
@@ -183,7 +223,7 @@ async function init() {
           loadObjPlain // sin .mtl — carga el .obj con su material por defecto
         )
       })
-      .catch(() => {})
+      .catch(() => buildProceduralPineapple())
   }
 
   function tryLoadFBX() {
@@ -191,9 +231,17 @@ async function init() {
       .then(({ FBXLoader }) => {
         const loader = new FBXLoader()
         loader.setPath(MODELS_DIR)
-        loader.load(FBX_FILE, useRealModel, undefined, () => {
-          tryLoadOBJ()
-        })
+        loader.load(
+          FBX_FILE,
+          (model) => {
+            useRealModel(model)
+            applyBaseColorTexture(model)
+          },
+          undefined,
+          () => {
+            tryLoadOBJ()
+          }
+        )
       })
       .catch(() => tryLoadOBJ())
   }
@@ -262,7 +310,10 @@ async function init() {
 
     renderer.render(scene, camera)
 
-    if (!revealed) {
+    // Solo se revela el canvas cuando el group ya tiene contenido
+    // real (modelo cargado o, en último caso, el procedural) — así
+    // nunca se ve un destello de la piña genérica antes de la tuya.
+    if (!revealed && group.children.length > 0) {
       revealed = true
       canvas.style.opacity = '1'
       if (fallback) fallback.style.opacity = '0'

@@ -8,11 +8,18 @@ Coloca aquí tu archivo exportado con uno de estos nombres exactos
 3. pineapple.obj   + pineapple.mtl  (si tu .obj usa colores/texturas,
                        el .mtl debe ir en esta misma carpeta junto al .obj)
 
-Si tu modelo usa una imagen de textura (ej. textura.png), pon también
-ese archivo de imagen en esta misma carpeta.
+Si tu modelo (.fbx u .obj) no trae la textura de color enlazada
+(por ejemplo si la exportaste sin "embed media" o el material es
+un shader de Maya/3ds Max que no se exporta), coloca la imagen ya
+horneada con el nombre exacto:
+
+  pineapple_basecolor.png
+
+El sitio la detecta sola y la aplica como color sobre el modelo.
+No es necesario para .glb (ese formato ya trae su textura incluida).
 
 El color/material que ya tenga tu archivo se respeta tal cual —
-no se le aplica ningún color por código.
+solo se sobreescribe si existe pineapple_basecolor.png.
 
 Si no hay ningún archivo aquí, el sitio muestra automáticamente una
 piña de relleno generada por código (con el degradado azul-violeta-coral)
