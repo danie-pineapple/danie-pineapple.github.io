@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { GradientLine } from '../components/GradientLine'
 import { imgUrl } from '../utils/imgUrl'
 import { useLanguage } from '../i18n/LanguageContext'
+
+const MOTION_URL = 'https://danie-pineapple.github.io/motion/'
 
 export function HeroSection() {
   const { t } = useLanguage()
@@ -93,6 +95,34 @@ export function HeroSection() {
             <span className="w-px h-3 bg-neutral-300" />
             <a href="#contact" className="text-neutral-500 hover:text-neutral-800 font-light text-xs uppercase tracking-widest transition-colors duration-200">
               {t.hero.ctaContact}
+            </a>
+          </motion.div>
+
+          {/* ── Enlace a la página de Motion Designs ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="mt-8"
+          >
+            <a
+              href={MOTION_URL}
+              className="group inline-flex rounded-full p-px transition-shadow duration-300 hover:shadow-[0_12px_30px_-12px_rgba(138,79,216,0.55)]"
+              style={{ background: 'linear-gradient(90deg, #4453E8 0%, #8A4FD8 50%, #F2784A 100%)' }}
+            >
+              <span className="inline-flex items-center gap-3 rounded-full bg-white group-hover:bg-neutral-900 pl-5 pr-2 py-2 transition-colors duration-300">
+                <span className="flex flex-col leading-tight">
+                  <span className="text-[10px] uppercase tracking-[0.25em] font-light text-neutral-400 group-hover:text-neutral-400">
+                    {t.hero.ctaMotionKicker}
+                  </span>
+                  <span className="text-sm uppercase tracking-widest font-medium text-neutral-900 group-hover:text-white transition-colors duration-300">
+                    {t.hero.ctaMotion}
+                  </span>
+                </span>
+                <span className="w-8 h-8 rounded-full bg-neutral-900 group-hover:bg-white flex items-center justify-center transition-colors duration-300">
+                  <ArrowUpRight size={15} className="text-white group-hover:text-neutral-900 transition-all duration-300 group-hover:rotate-45" />
+                </span>
+              </span>
             </a>
           </motion.div>
         </div>

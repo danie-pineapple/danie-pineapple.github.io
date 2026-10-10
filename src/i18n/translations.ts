@@ -16,6 +16,8 @@ export interface TranslationShape {
     tagline: string
     ctaWork: string
     ctaContact: string
+    ctaMotion: string
+    ctaMotionKicker: string
     location: string
   }
   about: {
@@ -52,6 +54,8 @@ export const translations: Record<Lang, TranslationShape> = {
       tagline: '3D animation, motion graphics and visual storytelling for brands, broadcast and digital experiences.',
       ctaWork: 'View Work',
       ctaContact: 'Contact',
+      ctaMotion: 'Motion Designs',
+      ctaMotionKicker: 'Showreel',
       location: 'Barcelona, Spain',
     },
     about: {
@@ -102,6 +106,8 @@ export const translations: Record<Lang, TranslationShape> = {
       tagline: 'Animación 3D, motion graphics y narrativa visual para marcas, broadcast y experiencias digitales.',
       ctaWork: 'Ver Proyectos',
       ctaContact: 'Contacto',
+      ctaMotion: 'Motion Designs',
+      ctaMotionKicker: 'Reel',
       location: 'Barcelona, España',
     },
     about: {
